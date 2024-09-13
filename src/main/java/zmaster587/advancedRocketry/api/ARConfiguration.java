@@ -465,7 +465,7 @@ public class ARConfiguration {
         arConfig.launchingDestroysBlocks = config.get(ROCKET, "launchBlockDestruction", false, "If true rocket launches will kill plants, glass soil, turn rock into lava, and more").getBoolean();
         blackListRocketBlocksStr = config.getStringList("rocketBlockBlackList", ROCKET, new String[]{"minecraft:portal", "minecraft:bedrock", "minecraft:snow_layer", "minecraft:water", "minecraft:flowing_water", "minecraft:lava", "minecraft:flowing_lava", "minecraft:fire", "advancedrocketry:rocketfire"}, "Mod:Blockname  for example \"minecraft:chest\"");
         arConfig.advancedWeightSystem = config.get(ROCKET, "advancedWeightSystem", true, "Enables advanced weight system which computes rocket weight, including the handled inventories. Block weights are stores in weights.json").getBoolean();
-        arConfig.advancedWeightSystemInventories = config.get(ROCKET, "advancedWeightSystemInventories", false, "Enables advanced weight system for inventories - may not work with modded inventories (eg IE storage chests)").getBoolean();
+        arConfig.advancedWeightSystemInventories = config.get(ROCKET, "advancedWeightSystemInventories", true, "Enables advanced weight system for inventories - may not work with modded inventories (eg IE storage chests)").getBoolean();
         arConfig.partsWearSystem = config.get(ROCKET, "partsWearSystem", true, "Enables rocket parts wear subsystem. Every rocket start it has probability to explode based on parts' wear intensities").getBoolean();
         arConfig.increaseWearIntensityProb = config.get(ROCKET, "increaseWearIntensityProb", 0.025, "Every rocket usage every part has this probability to increase wear intensity").getDouble();
 

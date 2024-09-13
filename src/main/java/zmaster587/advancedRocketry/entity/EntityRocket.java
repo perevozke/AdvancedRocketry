@@ -32,7 +32,6 @@ import net.minecraft.world.Teleporter;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.chunk.Chunk;
-import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
@@ -90,8 +89,6 @@ import zmaster587.libVulpes.util.*;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
-
-import static java.lang.Math.min;
 
 public class EntityRocket extends EntityRocketBase implements INetworkEntity, IModularInventory, IProgressBar, IButtonInventory, ISelectionNotify, IPlanetDefiner {
 
@@ -1742,14 +1739,14 @@ public class EntityRocket extends EntityRocketBase implements INetworkEntity, IM
         this.setDead();
     }
 
-    /**
-     * Launches the rocket post determining its height, checking whether it can launch to the selected planet and whether it can exist,
-     * among other factors. Also handles orbital height calculations
-     */
     public void recalculateStats(){
         this.storage.recalculateStats(this.stats);
     }
 
+    /**
+     * Launches the rocket post determining its height, checking whether it can launch to the selected planet and whether it can exist,
+     * among other factors. Also handles orbital height calculations
+     */
     @Override
     public void launch() {
 

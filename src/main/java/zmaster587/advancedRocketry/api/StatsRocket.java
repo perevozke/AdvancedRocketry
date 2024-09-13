@@ -3,8 +3,11 @@ package zmaster587.advancedRocketry.api;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagFloat;
 import net.minecraft.nbt.NBTTagInt;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
 import zmaster587.advancedRocketry.api.fuel.FuelRegistry;
 import zmaster587.advancedRocketry.api.fuel.FuelRegistry.FuelType;
+import zmaster587.advancedRocketry.util.WeightEngine;
 import zmaster587.libVulpes.util.HashedBlockPosition;
 import zmaster587.libVulpes.util.Vector3F;
 
@@ -129,7 +132,19 @@ public class StatsRocket {
     }
 
     public float getWeight() {
-        return weight;
+        float fluidWeight = 0;
+        if (ARConfiguration.getCurrentConfig().advancedWeightSystem) {
+            if (FluidRegistry.isFluidRegistered(getFuelFluid())) {
+                Fluid f = FluidRegistry.getFluid(getFuelFluid());
+                fluidWeight += WeightEngine.INSTANCE.getWeight(f, getFuelAmount(FuelType.LIQUID_MONOPROPELLANT));
+                fluidWeight += WeightEngine.INSTANCE.getWeight(f, getFuelAmount(FuelType.LIQUID_BIPROPELLANT));
+            }
+            if (FluidRegistry.isFluidRegistered(getOxidizerFluid())) {
+                Fluid f = FluidRegistry.getFluid(getOxidizerFluid());
+                fluidWeight += WeightEngine.INSTANCE.getWeight(f, getFuelAmount(FuelType.LIQUID_OXIDIZER));
+            }
+        }
+        return weight + fluidWeight;
     }
 
     public void setWeight(float weight) {
