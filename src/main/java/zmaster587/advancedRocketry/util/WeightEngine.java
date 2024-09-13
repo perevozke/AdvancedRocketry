@@ -173,7 +173,7 @@ public enum WeightEngine {
 
     public void save() {
         try (FileWriter w = new FileWriter(file)) {
-            Gson GSON = new GsonBuilder().disableHtmlEscaping().create();
+            Gson GSON = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
             JsonObject json = new JsonObject();
             json.add("individual", GSON.toJsonTree(weights));
             w.write(GSON.toJson(json));
