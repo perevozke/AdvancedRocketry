@@ -248,6 +248,9 @@ public class TileRocketAssemblingMachine extends TileEntityRFConsumer implements
 
     public AxisAlignedBB scanRocket(World world, BlockPos pos2, AxisAlignedBB bb) {
 
+        world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
+
+        stats = new StatsRocket(); // reset stats
 
         //if already a rocket exists, output their stats
 
