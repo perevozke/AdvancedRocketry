@@ -50,8 +50,8 @@ public enum WeightEngine {
             return (float) weight;
         }
 
-        double tankWeight = 0.8;
-        double motorWeight = 3;
+        double tankWeight = 0.2;
+        double motorWeight = 2;
         double guidanceComputerWeight = 1.8;
 
         double pressureTankWeight = 5;
@@ -106,9 +106,9 @@ public enum WeightEngine {
             return (float) weight;
         }
 
-        weight = 0.01 * amount;
+        weight = 0.001 * amount;
 
-        weights.put(fluid.getUnlocalizedName(), 0.01);
+        weights.put(fluid.getUnlocalizedName(), 0.001);
         return (float) weight;
     }
 

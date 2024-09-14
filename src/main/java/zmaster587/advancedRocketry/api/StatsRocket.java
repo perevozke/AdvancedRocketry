@@ -131,6 +131,8 @@ public class StatsRocket {
         this.thrust = thrust;
     }
 
+    public float getWeight_NoFuel() {return weight;}
+
     public float getWeight() {
         float fluidWeight = 0;
         if (ARConfiguration.getCurrentConfig().advancedWeightSystem) {
@@ -184,8 +186,8 @@ public class StatsRocket {
     }
 
     public float getAcceleration(float gravitationalMultiplier) {
-        float N = getThrust() - (weight * ((ARConfiguration.getCurrentConfig().gravityAffectsFuel) ? gravitationalMultiplier : 1));
-        return N/weight/20f;
+        float N = getThrust() - (getWeight()  * ((ARConfiguration.getCurrentConfig().gravityAffectsFuel) ? gravitationalMultiplier : 1));
+        return N/getWeight() /20f;
     }
 
     public List<Vector3F<Float>> getEngineLocations() {

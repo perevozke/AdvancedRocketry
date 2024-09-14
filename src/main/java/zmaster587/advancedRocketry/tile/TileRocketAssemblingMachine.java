@@ -521,6 +521,8 @@ public class TileRocketAssemblingMachine extends TileEntityRFConsumer implements
         for (IInfrastructure infrastructure : getConnectedInfrastructure()) {
             rocket.linkInfrastructure(infrastructure);
         }
+
+        scanRocket(world, pos, bbCache); // to show stats
     }
 
     /**
@@ -836,7 +838,7 @@ public class TileRocketAssemblingMachine extends TileEntityRFConsumer implements
 
         updateText();
 
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < 15; i++)
             modules.add(new ModuleSync(i, this));
 
 
@@ -910,31 +912,47 @@ public class TileRocketAssemblingMachine extends TileEntityRFConsumer implements
                 break;
             case 2:
                 setStatus(value);
+                break;
 
 
             case 3:
                 getRocketStats().setBaseFuelRate(FuelType.LIQUID_MONOPROPELLANT, value);
                 break;
             case 4:
-                getRocketStats().setFuelCapacity(FuelType.LIQUID_MONOPROPELLANT, value);
+                getRocketStats().setFuelAmount(FuelType.LIQUID_MONOPROPELLANT, value);
                 break;
             case 5:
+                getRocketStats().setFuelCapacity(FuelType.LIQUID_MONOPROPELLANT, value);
+                break;
+            case 6:
                 getRocketStats().setFuelRate(FuelType.LIQUID_MONOPROPELLANT, value);
                 break;
 
-            case 6:
-                getRocketStats().setFuelRate(FuelType.LIQUID_BIPROPELLANT, value);
             case 7:
                 getRocketStats().setFuelRate(FuelType.LIQUID_BIPROPELLANT, value);
+                break;
             case 8:
-                getRocketStats().setFuelRate(FuelType.LIQUID_BIPROPELLANT, value);
-
+                getRocketStats().setFuelAmount(FuelType.LIQUID_BIPROPELLANT, value);
+                break;
             case 9:
-                getRocketStats().setFuelRate(FuelType.NUCLEAR_WORKING_FLUID, value);
+                getRocketStats().setFuelRate(FuelType.LIQUID_BIPROPELLANT, value);
+                break;
             case 10:
-                getRocketStats().setFuelRate(FuelType.NUCLEAR_WORKING_FLUID, value);
+                getRocketStats().setFuelRate(FuelType.LIQUID_BIPROPELLANT, value);
+                break;
+
             case 11:
                 getRocketStats().setFuelRate(FuelType.NUCLEAR_WORKING_FLUID, value);
+                break;
+            case 12:
+                getRocketStats().setFuelAmount(FuelType.NUCLEAR_WORKING_FLUID, value);
+                break;
+            case 13:
+                getRocketStats().setFuelRate(FuelType.NUCLEAR_WORKING_FLUID, value);
+                break;
+            case 14:
+                getRocketStats().setFuelRate(FuelType.NUCLEAR_WORKING_FLUID, value);
+                break;
 
 
         }
@@ -946,32 +964,38 @@ public class TileRocketAssemblingMachine extends TileEntityRFConsumer implements
         switch (id) {
 
             case 0:
-                return (int)(getRocketStats().getWeight()*1000);// because it is a float really so take it *1000
+                return (int)(getRocketStats().getWeight_NoFuel()*1000);// because it is a float really so take it *1000
             case 1:
                 return getRocketStats().getThrust();
             case 2:
                 return getStatus().ordinal();
 
-                //I think this is missing the other fuel types...
+
             case 3:
                 return getRocketStats().getBaseFuelRate(FuelType.LIQUID_MONOPROPELLANT);
             case 4:
-                return getRocketStats().getFuelCapacity(FuelType.LIQUID_MONOPROPELLANT);
+                return getRocketStats().getFuelAmount(FuelType.LIQUID_MONOPROPELLANT);
             case 5:
+                return getRocketStats().getFuelCapacity(FuelType.LIQUID_MONOPROPELLANT);
+            case 6:
                 return getRocketStats().getFuelRate(FuelType.LIQUID_MONOPROPELLANT);
 
-            case 6:
-                return getRocketStats().getBaseFuelRate(FuelType.LIQUID_BIPROPELLANT);
             case 7:
-                return getRocketStats().getFuelCapacity(FuelType.LIQUID_BIPROPELLANT);
+                return getRocketStats().getBaseFuelRate(FuelType.LIQUID_BIPROPELLANT);
             case 8:
+                return getRocketStats().getFuelAmount(FuelType.LIQUID_BIPROPELLANT);
+            case 9:
+                return getRocketStats().getFuelCapacity(FuelType.LIQUID_BIPROPELLANT);
+            case 10:
                 return getRocketStats().getFuelRate(FuelType.LIQUID_BIPROPELLANT);
 
-            case 9:
-                return getRocketStats().getBaseFuelRate(FuelType.NUCLEAR_WORKING_FLUID);
-            case 10:
-                return getRocketStats().getFuelCapacity(FuelType.NUCLEAR_WORKING_FLUID);
             case 11:
+                return getRocketStats().getBaseFuelRate(FuelType.NUCLEAR_WORKING_FLUID);
+            case 12:
+                return getRocketStats().getFuelAmount(FuelType.NUCLEAR_WORKING_FLUID);
+            case 13:
+                return getRocketStats().getFuelCapacity(FuelType.NUCLEAR_WORKING_FLUID);
+            case 14:
                 return getRocketStats().getFuelRate(FuelType.NUCLEAR_WORKING_FLUID);
 
 
@@ -982,7 +1006,7 @@ public class TileRocketAssemblingMachine extends TileEntityRFConsumer implements
     @Override
     public void onInventoryButtonPressed(int buttonId) {
         PacketHandler.sendToServer(new PacketMachine(this, (byte) (buttonId)));
-        updateText();
+        //updateText();
     }
 
     @Override

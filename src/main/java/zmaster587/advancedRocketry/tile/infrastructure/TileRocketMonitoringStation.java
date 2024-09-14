@@ -360,7 +360,7 @@ public class TileRocketMonitoringStation extends TileEntity implements IModularI
         if (id == 0)
             return ARConfiguration.getCurrentConfig().orbit;
         else if (id == 1)
-            return 200;
+            return 1000;
         else if (id == 2)
             if (world.isRemote)
                 return maxFuelLevel;

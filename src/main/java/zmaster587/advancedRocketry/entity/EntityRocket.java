@@ -1750,6 +1750,8 @@ public class EntityRocket extends EntityRocketBase implements INetworkEntity, IM
     @Override
     public void launch() {
 
+        if(world.isRemote)return;
+
         if (isInFlight())
             return;
 
@@ -1769,7 +1771,10 @@ public class EntityRocket extends EntityRocketBase implements INetworkEntity, IM
             for (HashedBlockPosition pos : this.infrastructureCoords) {
                 TileEntity te = world.getTileEntity(pos.getBlockPos());
                 if (te instanceof TileRocketAssemblingMachine) {
-                    ((TileRocketAssemblingMachine) te).getRocketStats().setWeight(this.stats.getWeight());
+                    //this does not work: getWeight() returns weight + fuel. setWeight() should not include fuel weight because it is calculated on every getweight()
+                    // so if you say setweight(getweight()) and next time I call getweight() it returns weight+fuel+fuel
+                    // we do not need this anyway because the assembler has IDataSync interface and syncs itself
+                    //((TileRocketAssemblingMachine) te).getRocketStats().setWeight(this.stats.getWeight());
                 }
             }
         }
