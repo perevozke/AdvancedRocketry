@@ -1,6 +1,7 @@
 package zmaster587.advancedRocketry.atmosphere;
 
 import matteroverdrive.entity.player.MOPlayerCapabilityProvider;
+import matteroverdrive.init.OverdriveBioticStats;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -28,7 +29,9 @@ public class AtmosphereNeedsSuit extends AtmosphereType {
     public boolean isImmune(EntityLivingBase player) {
 
         if(Loader.isModLoaded("matteroverdrive")) {
-            return (MOPlayerCapabilityProvider.GetAndroidCapability(player) != null && MOPlayerCapabilityProvider.GetAndroidCapability(player).isAndroid());
+            if (MOPlayerCapabilityProvider.GetAndroidCapability(player) != null
+                    && MOPlayerCapabilityProvider.GetAndroidCapability(player).isAndroid()
+                    && MOPlayerCapabilityProvider.GetAndroidCapability(player).isUnlocked(OverdriveBioticStats.oxygen, 1)) return true;
         }
         //Checks if player is wearing spacesuit or anything that extends ItemSpaceArmor
 
